@@ -2,7 +2,7 @@
 title: "The fixIDF package"
 author: "Thea Roksvåg"
 date: "22 1 2021"
-output: html_document
+output: github_document
 number_sections: true
 ---
 
