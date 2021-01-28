@@ -195,7 +195,7 @@ print(quant_bay$`dur=20`[93:99,])
     ## 98% 11.34019 17.73239 22.78147 28.33049 30.50030 37.63332 46.33940 57.72428
     ## 99% 11.73062 18.14170 24.34043 31.26327 33.81118 41.00788 52.17805 64.54574
 
-That is, the matrices in `quant_bay$dur=...` contains the return levels
+That is, the matrices in `quant_bay$dur=...` contain the return levels
 and have one row for each posterior quantile in (1,…,99)% and one column
 for each return period that was used as input. The list that was
 returned from `compute_quantiles()` can next be used directly as input
