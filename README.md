@@ -105,8 +105,8 @@ GEV-distribution as follows:
 <img src="https://render.githubusercontent.com/render/math?math=G(x) = \exp\{-[1+\xi(\frac{x-\mu}{\sigma})]^{-1/\xi}\}">
 
 for  <img src="https://render.githubusercontent.com/render/math?math=1+\xi(\frac{x-\mu}{\sigma})>0">, 
-where <img src="https://render.githubusercontent.com/render/math?math=\mu\in R"> corresponds to the `location` parameter, 
-<img src="https://render.githubusercontent.com/render/math?math=\sigma>0"> corresponds to the the `scale` parameter and <img src="https://render.githubusercontent.com/render/math?math=\xi\in R"> corresponds to
+where <img src="https://render.githubusercontent.com/render/math?math=\mu\in \R"> corresponds to the `location` parameter, 
+<img src="https://render.githubusercontent.com/render/math?math=\sigma>0"> corresponds to the the `scale` parameter and <img src="https://render.githubusercontent.com/render/math?math=\xi\in \R"> corresponds to
 the `shape` parameter in `theta`.
 
 ### Data preparation
