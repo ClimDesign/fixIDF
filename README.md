@@ -238,7 +238,7 @@ of interest, for all the durations represented in
 `theta_subset$duration`. The returned data frame can be used directly as
 input in the `fixcurves_iso()` function.
 
-#### 2\) Data preparation when \(not\) having GEV-parameter MCMC parameter samples
+#### 2\) Data preparation when not having GEV-parameter MCMC parameter samples
 
 If you want to use `fixcurves_alg()`, but use a different type of
 distribution than the three parameter GEV-distribution or don’t have
