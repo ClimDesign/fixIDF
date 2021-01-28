@@ -1,0 +1,169 @@
+library(IDFix)
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=2
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="down",save.history=TRUE,seed=3)
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="up",save.history=TRUE,seed=3)
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="up",save.history=TRUE,seed=4)
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="up",save.history=TRUE,seed=9)
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="up",save.history=TRUE,seed=90)
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="up",save.history=TRUE,seed=3)
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="up",save.history=TRUE,seed=1)
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=2
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="down",save.history=TRUE,seed=3)
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="down",save.history=TRUE,seed=3)
+res_alg
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="down",save.history=TRUE,seed=3)
+res_alg$curve.history
+res_alg$k
+res_alg$convergence
+res_alg$adjusted.curves
+res_alg$unadjusted.curves
+res_alg$pvec
+res_alg$quantvec
+res_alg$quantile.history
+res_alg$curve.history
+curves=rbind(c(1,3,6),c(1,0.5,4),c(1,9,20))
+nonMonotonic_check(curves)
+library(IDFix)
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
+library(IDFix)
+library(IDFix)
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=selection_alg(quant_bay,maxit=1000,strategy="down",save.history=TRUE,seed=3)
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
+res_alg$winnig.strategy
+res_alg$k
+res_alg$convergence
+res_alg$adjusted.curves
+res_alg$unadjusted.curves
+library(IDFix)
+?fixcurves_alg
+library(IDFix)
+?fixcurves_alg
+?selection_alg
+?selection_alg
+library(IDFix)
+library(IDFix)
+library(IDFix)
+?plotIDF
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
+#Plot IDF-curves for adjusted curves:
+plotIDF(res_alg$adjusted.curves,ylim=c(0,100))
+#Plot IDF-curves for unadjusted curves:
+plotIDF(res_alg$unadjusted.curves,ylim=c(0,100))
+plotIDF(res_alg$adjusted.curves,ylim=c(0,100))
+#Plot IDF-curves for unadjusted curves:
+plotIDF(res_alg$unadjusted.curves,ylim=c(0,100))
+#Plot IDF-curves for adjusted curves:
+plotIDF(res_alg$adjusted.curves,ylim=c(0,100))
+plotIDF(res_alg$unadjusted.curves,ylim=c(0,100),yname="Return level (mm)")
+plotIDF(res_alg$unadjusted.curves,ylim=c(0,100),yname="Return level (mm)",textsize=30)
+plotIDF(res_alg$unadjusted.curves,ylim=c(0,100),yname="Return level (mm)",textsize=25)
+plotIDF(res_alg$adjusted.curves,ylim=c(0,100),yname="Return level (mm)",textsize=30)
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=2
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
+#Plot IDF-curves for unadjusted return levels:
+plotIDF(res_alg$unadjusted.curves,ylim=c(0,100),yname="Return level (mm)",textsize=25)
+#Plot IDF-curves for adjusted return levels:
+plotIDF(res_alg$adjusted.curves,ylim=c(0,100),yname="Return level (mm)",textsize=30)
+library(IDFix)
+library(IDFix)
+?plotIDF
+#Extract the parameter samples from a specific precipitation station:
+data("theta",package="IDFix")
+statnr=1
+stations=unique(theta$stnr)[statnr]
+parameter.samples=theta[theta$stnr==stations,]
+#Compute quantiles:
+quant_bay=compute_quantiles(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200))
+#Perform the selection algorithm in order to find a set of consistent curves:
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
+#Plot IDF-curves for unadjusted return levels:
+plotIDF(res_alg$unadjusted.curves,ylim=c(0,100),yname="Return level (mm)",textsize=25)
+#Plot IDF-curves for adjusted return levels:
+plotIDF(res_alg$adjusted.curves,ylim=c(0,100),yname="Return level (mm)",textsize=30)
+?plotIDF
+library(IDFix)
+library(IDFix)

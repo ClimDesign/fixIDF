@@ -1,0 +1,11 @@
+Package: fixIDF
+Type: Package
+Title: Consistent estimation of intensity-duration-frequency by post-processing of Bayesian posterior quantiles
+Version: 1.0
+Author: Thea Roksvåg
+Maintainer: Thea Roksvåg <roksvag@nr.no>
+Depends: isotonic.pen, ggplot2, viridis
+Description: The package includes functions to adjust IDF-curves, i.e. return levels, such that they become consistent across durations and return periods. The adjustments can either be done by using a selection algorithm that searches for a consistent set of curves from the 1-99 % posterior Bayesian quantiles or by using a curve-fitting method called isotonic regression. Plot functions for plotting IDF-curves and example data are also included.
+License: 
+Encoding: UTF-8
+LazyData: true

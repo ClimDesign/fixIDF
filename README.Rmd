@@ -1,0 +1,172 @@
+---
+title: "The fixIDF package"
+author: "Thea Roksvåg"
+date: "22 1 2021"
+output: html_document
+number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+An intensity duration frequency (IDF) curve shows the relationship between rainfall intensities (return levels), the duration of the intensity and how often the intensity is expected to occur over time (frequency or return period). Often, IDF curves are fitted to annual maximum precipitation data, one duration at the time, independently of other durations. However, this can give inconsistent return levels across return periods and durations.  `fixIDF` is a R package that includes two functions for adjusting IDF-curves such that they become consistent across return periods and durations: `fixcurves_alg()` and `fixcurves_iso()`.
+
+### fixcurves_alg()
+The function `fixcurves_alg()` is suitable for adjusting return levels that are obtained from any Bayesian method. It takes the return levels' 1-99 % posterior quantiles as input together with the associated durations and return periods. The function contains an algorithm that searches for  a consistent set of curves within the   1-99 % posterior quantiles and tries to find solutions that are as close as possible to the posterior medians of the initial Bayesian model. 
+
+### fixcurves_iso()
+The function `fixcurves_iso()` is suitable for adjusting return levels that are estimated by any statistical or process-based method. It takes return levels as input, together with associated durations and return periods.  The return levels are adjusted by using isotonic regression through the 
+function `iso_pen()` from the package  `isotonic.pen()`.
+
+### Visualize the results with plotIDF and plotGEV
+Plot functions for plotting the adjusted IDF-curves are available through the functions `plotIDF()` and `plotGEV()`.
+
+
+### Important assumptions
+* The functions `fixcurves_alg()` and `fixcurves_iso()` adjust the return levels such that they become monotonically increasing as a function of duration and return period. Hence, the input return levels must be modeled with a unit such that this assumption makes sense. A suitable unit for the input precipitation return levels would for example be mm. A unit that would be inappropriate would be mm/hour.
+
+* The adjustred return levels that comes out of `fixcurves_alg()`  and `fixcurves_iso()` are intended as point predictions of the underlying return levels. It is recommended to keep the initial uncertainty bounds as your measure of uncertainty.
+
+* The functions `fixcurves_alg()` and `fixcurves_iso()` can also be used to adjust QDF curves. Again, the input return levels must be  given a unit such that it makes sense that the return levels increase as a function of duration and return period.
+
+
+## How to use the functions
+
+### Testdata: MCMC sampled GEV-parameters
+The package contains a dataset that we use to demonstrate how the functions in the package works. The dataset can be uploaded in the R environment by writing :
+
+```{r, warning=FALSE,message=FALSE}
+library(fixIDF)
+data("theta",package="fixIDF")
+```
+
+The first elements in the data frame `theta` looks like this:
+
+```{r, warning=FALSE,message=FALSE}
+head(theta)
+```
+The dataset contains parameter samples sampled from a MCMC method. It is the three parameters of a generalized extreme value distribution, `location`,`scale` and `shape`,  that are estimated based on annual maximum precipitation data with unit mm from 5 different Norwegian precipitation stations. A station ID for the precipitation stations are stored in column `stnr`.  The parameters were estimated based on annual maximum precipitation data from 16 different durations. The durations are stored in column `duration` and have unit minutes. For each station and duration, a MCMC procedure was carried out. Hence, we assume one underlying GEV-distribution for each duration and station, and this is estimated locally, independently across durations and stations. 3000 of the MCMC samples for each duration and station are stored in `theta`.
+
+In this context, we define the cdf of the three parameter GEV-distribution as follows:
+
+$$G(x) = \exp\{-[1+\xi(\frac{x-\mu}{\sigma})]^{-1/\xi}\} \text{ for } 1+\xi(\frac{x-\mu}{\sigma})>0,$$
+
+where $\mu\in R$ corresponds to the `location` parameter, $\sigma>0$ corresponds to the  the `scale` parameter and $\xi\in R$ correspodns to the `shape` parameter in `theta`. 
+
+
+### Data preparation
+In the following we assume that you either:
+
+*1)* Have fitted annual maximum (precipitation) data to GEV-distributions for a location of interest. You should have fitted data from at least two durations, and one GEV-distribution should be fitted for each duration. The estimation is done by MCMC, and you have saved a reasonable number of parameter samples (e.g. 3000 MCMC samples per duration and location). This is the situation illustrated by the example dataset `theta`. 
+
+*2)*  Have estimated return levels for several durations and return periods by using any statistical or process-based method. Your estimated return levels are summarized through a single summary statistic $or$ through the return levels' posterior (1,2,3,...,98, 99) % quantiles for each duration and return period.
+
+In the next two subsection we describe how you can prepare your input data for use in `fixcurves_alg()` and `fixcurves_iso()` in these two situations.
+
+
+#### 1) Data preparation when having GEV-parameter  MCMC parameter samples
+If you are using a Bayesian  MCMC method to estimate return levels you might have parameter samples corresponding to each of the three GEV-parameters; location, scale and shape available. The package `fixIDF` includes a function for computing the return levels' posterior quantiles from your parameter samples. The function is called `compute_quantiles()` and takes a data frame as input. This data frame must have the columns `duration`, `location`, `scale` and `shape`, similarly as the example dataset `theta`. However, the data frame should only include parameter samples for one single precipitation station, unlike `theta` that has precipitation data from 5 stations. 
+
+The function `compute_quantiles()` can for example be used for computing the return levels' posterior quantiles for the precipitation station with `stnr=2` as follows:
+```{r, warning=FALSE,message=FALSE}
+theta_subset=theta[which(theta$stnr==2),]
+
+quant_bay=compute_quantiles(theta_subset,ret.period=c(2,5,10,20,25,50,100,200))
+```
+Here,  `ret.period` refers to some return periods of your choice, given in years.
+
+The returned object `quant_bay`is a list containing one element for each of the durations represented in   `theta_subset$duration`. The list is named according to duration (`quant_bay$"dur=..."`) and each element contains a matrix with the posterior quantiles. The output has the following structure:
+
+```{r, warning=FALSE,message=FALSE}
+names(quant_bay)
+print(quant_bay$`dur=20`[1:5,])
+print(quant_bay$`dur=20`[93:99,])
+
+```
+That is, the matrices in `quant_bay$dur=...` contains the return levels and have one row for each posterior quantile in (1,...,99)% and one column for each return period that was used as input. The list that was returned from `compute_quantiles()` can next be used directly as input in `fixcurves_alg()` and `fixcurves_iso()`.
+
+In order to use `fixcurves_iso()`, you don't really need the (1,2,...,99) \% posterior quantiles. In fact, you only need the posterior means or some other type of estimate for the return levels. If your have GEV-parameter MCMC samples, posterior medians or means can be obtained by using the function `compute_estimates()`. This takes the same input as  `compute_quantiles` and can be used as follows:
+
+```{r, warning=FALSE,message=FALSE}
+theta_subset=theta[which(theta$stnr==2),]
+
+mean_bay=compute_estimates(theta_subset,ret.period=c(2,5,10,20,25,50,100,200),type="mean")
+median_bay=compute_estimates(theta_subset,ret.period=c(2,5,10,20,25,50,100,200),type="median")
+```
+Here, the  `type`  argument refers to what kind of summary statistics you want for your return levels, and either `"mean"` or `"median"` can be chosen.
+
+The returned object is a data frame that looks like this:
+```{r, warning=FALSE,message=FALSE}
+head(median_bay)
+```
+It contains the posterior median return levels for your return periods of interest, for all the durations represented in  `theta_subset$duration`. The returned data frame can be used directly as input in the `fixcurves_iso()` function. 
+
+#### 2) Data preparation when $not$ having GEV-parameter MCMC parameter samples 
+If you want to use `fixcurves_alg()`, but use a different type of distribution than the three parameter GEV-distribution or don't have MCMC samples, you have to compute the (1,2,...,99) posterior quantile return levels yourself. Then you need to prepare a list of matrices with the same format as the example list `quant_bay`, shown above.
+
+If you want to use `fixcurves_iso()` without having GEV-parameter MCMC samples available, you need to make a data frame similar to `median_bay` yourself. This is a  data frame with columns `ret.periods`,`durations` and `ret.levels` containing return periods, durations and estimated  return levels for your precipitation station of interest. The estimated return levels can be estimated by using any statistical or process-based method.
+
+### Post-processing of Bayesian quantiles by using `fixcurves_alg()`
+The `fixcurves_alg()` can now be used to adjust IDF-curves such that the return levels become monotonically increasing as a function of return period and durations. The function searches for a consistent set of return levels within the return levels' 1-99 \% posterior quantiles, and prefers solutions as close as possible to the posterior median.
+
+The function can be used as follows:
+```{r, warning=FALSE,message=FALSE}
+res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=6)
+
+```
+
+The function tests two searching strategies, here referred to as the `upwards` and `downwards` algorithms. The printed output tells us that both strategies converged in 10 iterations, but the  `upwards` strategy gives adjusted quantiles closer to the initial posterior median. Hence, the solution corresponding to the  `upwards` strategy is returned. The adjusted IDF-curves can be found in `res_alg$adjusted.curves` and are stored in a matrix with the following format:
+
+```{r, warning=FALSE,message=FALSE}
+print(res_alg$adjusted.curves)
+```
+We see that each row represents a duration and each column represents a return period. 
+
+The curves can next be visualized in two different ways by using the plot functions `plotIDF` and `plotGEV` as follows:
+
+```{r, warning=FALSE,message=FALSE}
+plotIDF(res_alg$adjusted.curves,ylim=c(0,90),textsize=15,yname="Precipitation (mm)",xname="Duration (min)",legend.name="Return period (yr)")
+plotGEV(res_alg$adjusted.curves,ylim=c(0,90),textsize=15,yname="Precipitation (mm)",xname="Return period (yr)",legend.name="Duration (min)")
+
+```
+
+The initial posterior medians, i.e. the unadjusted curves, can be found in `res_alg$unadjusted.curves`. These can also be plotted as shown above by using `plotIDF()` and `plotGEV()`.
+
+Further, does the function `fixcurves_alg()` return a matrix that shows which quantile that was chosen for each duration as a function of iteration for the selection algorithm. This is stored in `quantile.history` and can be visualized  by using the function `plotHistory` as follows:
+
+```{r, warning=FALSE,message=FALSE}
+plotHistory(res_alg,ylim=c(0,100),legend.name="Durations (min)", textsize=15)
+```
+
+For this dataset, only two durations were moved away from the median: the curve corresponding to the 60 minutes duration and the 90 minutes duration. The quantiles the algorithm ended up choosing are also available in `res_alg$quantvec`:
+```{r, warning=FALSE,message=FALSE}
+res_alg$quantvec
+
+```
+
+The output shows that the return levels presented in `res_alg$adjusted.curves` are based on the posterior median for all durations, except the 60 minutes and 90 minutes durations that are based on the 46 \% and 55 \% posterior quantiles respectively.
+
+The number of iterations needed to find a valid set of curves is stored in `res_alg$k`. The variable `k=0` if the algorithm did not find a solution within `maxit` iterations. If the posterior medians already are consistent, we will have `k=1`. 
+
+We refer to `help(fixcurves_alg)` for a description of the remaining input and output variables of `fixcurves_alg`.
+
+### Post-processing of estimated return levels by using `fixcurves_iso()`
+While `fixcurves_alg()` requires that we use a Bayesian method to estimate our initial return levels, the function `fixcurves_iso()` can be used to adjust return levels estimated by any statistical or process-based method.
+
+It can be used with similar input as `fixcurves_alg()` as follows:
+```{r, warning=FALSE,message=FALSE}
+res_iso=fixcurves_iso(quant_bay=quant_bay,unadjusted.curves.df=NULL)
+```
+If a list similar to `quant_bay` is used as input, as in the example above, it is the posterior medians in the list that will be adjusted.
+
+Alternatively,  `fixcurves_iso()` can be used  with a simpler input, more specifically a data frame similar to `median_bay`:
+```{r, warning=FALSE,message=FALSE}
+res_iso=fixcurves_iso(quant_bay=NULL,unadjusted.curves.df=median_bay)
+```
+Here, the return levels in `median_bay$return_levels` will be adjusted (see the data preparation chapter).
+
+The unadjusted and adjusted curves can now be found in `res_iso$aundjusted.curves` and `res_iso$adjusted.curves` respectively. These have the same format as the curves returned from `fixcurves_alg()`. The unadjusted and adjusted return levels can be plotted with the functions `plotIDF()` and `plotGEV()` as already shown. 
+
+The function also returns the variable `res_iso$did.adjustments`. This is `TRUE` if adjusments have been done on the initial estimates and `FALSE` if the input return levels already were consistent across return levels and return periods.
