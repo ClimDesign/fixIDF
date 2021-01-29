@@ -16,7 +16,7 @@ includes two functions for adjusting IDF-curves such that they become
 consistent across return periods and durations: `fixcurves_alg()` and
 `fixcurves_iso()`.
 
-The package is downloaded in R by writing:
+The package can be downloaded in R by writing:
 
 ```
 Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS=TRUE)
