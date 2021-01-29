@@ -16,6 +16,14 @@ includes two functions for adjusting IDF-curves such that they become
 consistent across return periods and durations: `fixcurves_alg()` and
 `fixcurves_iso()`.
 
+The package is downloaded by writing:
+
+```
+Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS=TRUE)
+library(devtools)
+install_github("ClimDesign/fixIDF")
+```
+
 ### fixcurves\_alg()
 
 The function `fixcurves_alg()` is suitable for adjusting return levels
