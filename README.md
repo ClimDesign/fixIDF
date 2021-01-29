@@ -131,11 +131,9 @@ In the next two subsection we describe how you can prepare your input
 data for use in `fixcurves_alg()` and `fixcurves_iso()` in these two
 situations.
 
-<<<<<<< HEAD
-#### 1\) Data preparation when having GEV-parameter MCMC parameter samples
-=======
+
+
 #### 1\) Data preparation when having GEV-parameter MCMC samples
->>>>>>> 8cce90786ddffb5be97878d85efdaef99061bfc7
 
 If you are using a Bayesian MCMC method to estimate return levels you
 might have parameter samples corresponding to each of the three
