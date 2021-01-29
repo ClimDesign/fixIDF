@@ -131,7 +131,7 @@ In the next two subsection we describe how you can prepare your input
 data for use in `fixcurves_alg()` and `fixcurves_iso()` in these two
 situations.
 
-#### 1\) Data preparation when having GEV-parameter MCMC parameter samples
+#### 1\) Data preparation when having GEV-parameter MCMC samples
 
 If you are using a Bayesian MCMC method to estimate return levels you
 might have parameter samples corresponding to each of the three
@@ -238,7 +238,7 @@ of interest, for all the durations represented in
 `theta_subset$duration`. The returned data frame can be used directly as
 input in the `fixcurves_iso()` function.
 
-#### 2\) Data preparation when not having GEV-parameter MCMC parameter samples
+#### 2\) Data preparation when not having GEV-parameter MCMC samples
 
 If you want to use `fixcurves_alg()`, but use a different type of
 distribution than the three parameter GEV-distribution or don’t have
