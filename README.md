@@ -252,9 +252,12 @@ input in the `fixcurves_iso()` function.
 
 If you want to use `fixcurves_alg()`, but use a different type of
 distribution than the three parameter GEV-distribution or don’t have
-MCMC samples, you have to compute the (1,2,…,99) posterior quantile
+MCMC samples, you have to compute the (1,2,…,99) % posterior quantile
 return levels yourself. Then you need to prepare a list of matrices with
-the same format as the example list `quant_bay`, shown above.
+the same format as the example list `quant_bay`, shown above. Here, it is 
+important to name the list in `quant_bay` as `dur=...`. Further,
+should the row names of the matrices in `quant_bay$dur...` be `1%,...,99%`
+and the columnn names should be `T=...` according to your return periods.
 
 If you want to use `fixcurves_iso()` without having GEV-parameter MCMC
 samples available, you need to make a data frame similar to `median_bay`
