@@ -410,22 +410,23 @@ If a list similar to `quant_bay` is used as input, as in the example
 above, it is the posterior medians in the list that will be adjusted.
 
 Alternatively, `fixcurves_iso()` can be used with a simpler input, more
-specifically a data frame similar to `median_bay`:
+specifically a data frame similar to `median_bay` (see the data preparation chapter):
 
 ``` r
 res_iso=fixcurves_iso(quant_bay=NULL,unadjusted.curves.df=median_bay)
 ```
 
-Here, the return levels in `median_bay$return_levels` will be adjusted
-(see the data preparation chapter).
+Here, the return levels in `median_bay$return_levels` will be adjusted.
+In this case, this column contained posterior medians from a Bayesian 
+method, but return levels estimated from any method could be used here.
 
-The unadjusted and adjusted curves can now be found in
+The unadjusted and adjusted curves can be found in
 `res_iso$aundjusted.curves` and `res_iso$adjusted.curves` respectively.
 These have the same format as the curves returned from
 `fixcurves_alg()`. The unadjusted and adjusted return levels can be
 plotted with the functions `plotIDF()` and `plotGEV()` as already shown.
 
 The function also returns the variable `res_iso$did.adjustments`. This
-is `TRUE` if adjusments have been done on the initial estimates and
+is `TRUE` if adjustments have been done on the initial estimates and
 `FALSE` if the input return levels already were consistent across return
 levels and return periods.
