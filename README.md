@@ -255,7 +255,7 @@ distribution than the three parameter GEV-distribution or don’t have
 MCMC samples, you have to compute the (1,2,…,99) % posterior quantile
 return levels yourself. Then you need to prepare a list of matrices with
 the same format as the example list `quant_bay`, shown above. Here, it is 
-important to name the list in `quant_bay` as `dur=...`. Further,
+important to name the list `quant_bay` as `dur=...`. Further,
 should the row names of the matrices in `quant_bay$dur...` be `1%,...,99%`
 and the columnn names should be `T=...` according to your return periods.
 
@@ -269,8 +269,8 @@ method.
 
 ### Post-processing of Bayesian quantiles by using `fixcurves_alg()`
 
-The `fixcurves_alg()` can now be used to adjust IDF-curves such that the
-return levels become monotonically increasing as a function of return
+After preparing a `quant_bay` list, `fixcurves_alg()` can be used to adjust IDF-curves 
+such that the return levels become monotonically increasing as a function of return
 period and durations. The function searches for a consistent set of
 return levels within the return levels’ 1-99 % posterior quantiles, and
 prefers solutions as close as possible to the posterior median.
