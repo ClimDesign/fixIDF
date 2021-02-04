@@ -1,7 +1,9 @@
 The fixIDF package
 ================
 Thea Roksvåg
+<roksvag@nr.no>
 28 1 2021
+
 
 ## Overview
 
