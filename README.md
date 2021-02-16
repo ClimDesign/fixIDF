@@ -23,7 +23,7 @@ The package can be downloaded in R by writing:
 ```
 Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS=TRUE)
 library(devtools)
-install_github("ClimDesign/fixIDF")
+install_github("ClimDesign/fixIDF",ref="main)
 ```
 
 ### fixcurves\_alg()
