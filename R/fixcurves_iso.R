@@ -6,7 +6,7 @@ fixcurves_iso=function(quant_bay=NULL,unadjusted.curves.df=NULL){
   curves=c()
 
   if(is.null(unadjusted.curves.df)==FALSE){
-    durs=sort(unique(unadjusted.curves.df$durations))
+    durs=sort(as.numeric(unique(unadjusted.curves.df$durations)))
     for(i in 1:length(durs)){
       currentdata=unadjusted.curves.df[which(unadjusted.curves.df$durations==durs[i]),]
       curves= rbind(curves,currentdata$ret.levels[order(currentdata$ret.periods)])
