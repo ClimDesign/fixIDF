@@ -1,7 +1,7 @@
 compute_quantiles=function(parameter.samples,ret.periods=c(2,5,10,20,25,50,100,200)){
 
   quant_bay=list()
-  durs=sort(unique(parameter.samples$duration))
+  durs=sort(as.numeric(unique(parameter.samples$duration)))
 
   for(d in 1:length(durs)){
     currentSample=parameter.samples[which(parameter.samples$duration==durs[d]),]
