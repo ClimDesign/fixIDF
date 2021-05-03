@@ -423,7 +423,7 @@ In this case, this column contained posterior medians from a Bayesian
 method, but return levels estimated from any method could be used here.
 
 The unadjusted and adjusted curves can be found in
-`res_iso$aundjusted.curves` and `res_iso$adjusted.curves` respectively.
+`res_iso$unadjusted.curves` and `res_iso$adjusted.curves` respectively.
 These have the same format as the curves returned from
 `fixcurves_alg()`. The unadjusted and adjusted return levels can be
 plotted with the functions `plotIDF()` and `plotGEV()` as already shown.
