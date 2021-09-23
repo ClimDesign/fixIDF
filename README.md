@@ -69,6 +69,9 @@ through the functions `plotIDF()` and `plotGEV()`.
     given a unit such that it makes sense that the return levels
     increase as a function of duration and return period.
 
+
+    
+    
 ## How to use the functions
 
 ### Testdata: MCMC sampled GEV-parameters
@@ -107,7 +110,8 @@ are stored in column `duration` and have unit minutes. For each station
 and duration, a MCMC procedure was carried out. Hence, we assume one
 underlying GEV-distribution for each duration and station, and this is
 estimated locally, independently across durations and stations. 3000 of
-the MCMC samples for each duration and station are stored in `theta`.
+the MCMC samples for each duration and station are stored in `theta`. Make sure that the
+duration numbers are given as numbers and not e.g. as characters or as levels.
 
 In this context, we define the cdf of the three parameter
 GEV-distribution as follows:
