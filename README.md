@@ -4,6 +4,8 @@ Thea Roksvåg
 <roksvag@nr.no>
 28 1 2021
 
+Paper: https://doi.org/10.1016/j.jhydrol.2021.127000 
+
 
 ## Overview
 
