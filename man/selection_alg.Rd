@@ -51,8 +51,8 @@ See also \code{\link[fixIDF]{fixcurves_alg}}. For  preperation of input variable
 
 The adjusted and unadjusted curves can be plotted by using \code{\link[fixIDF]{plotIDF}} and \code{\link[fixIDF]{plotGEV}}.
 
- }
- }
+}
+ 
 \examples{
 #Extract the parameter samples from a specific precipitation station:
 data("theta",package="fixIDF")
