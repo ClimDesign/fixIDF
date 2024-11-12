@@ -32,7 +32,8 @@ The return level \eqn{z}  corresponding to a return period \eqn{T} is given by:
 
 }
 \source{
-%\url{https://seklima.met.no/}}
+%\url{https://seklima.met.no/}
+}
 \references{
 Lutz, J., Grinde,  L., Dyrrdal, A., 2020. Estimating  rainfall  design  values  for  the  city  of  Oslo,  Norway - Comparison of methods and quantification of uncertainty.  Water 12, 1735. doi:10.3390/w12061735.
 }
