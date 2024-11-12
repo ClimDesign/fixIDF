@@ -70,8 +70,7 @@ res_alg=fixcurves_alg(quant_bay,maxit=1000,save.history=TRUE,seed=3)
 #Plot:
 plotIDF(res_alg$unadjusted.curves)
 plotIDF(res_alg$adjusted.curves)
-
-  }
 }
+
  \keyword{ ~IDF }
  \keyword{ ~QDF }
