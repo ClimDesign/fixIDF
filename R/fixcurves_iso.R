@@ -33,7 +33,7 @@ fixcurves_iso=function(quant_bay=NULL,unadjusted.curves.df=NULL){
     adjustedcurves=oldcurves=curves
 
     print("No adjustments needed. The posterior medians are consistent.")
-    return(list(did.adjustments=FALSE,adjusted.curves=adjustedcurves,oldcurves=curves,xmat=xmat,yobs=ys,ypred=ys))
+    return(list(did.adjustments=FALSE,adjusted.curves=adjustedcurves,unadjusted.curves=oldcurves,xmat=xmat,yobs=ys,ypred=ys))
 
   }else{
     newcurves=iso_pen(xmat=xmat,y=ys,pen=FALSE)
