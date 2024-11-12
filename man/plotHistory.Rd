@@ -16,7 +16,7 @@ plotHistory(res_alg,ylim=NULL,legend.name="Durations (min)",textsize=15)
    \item{legend.name}{The name displayed over the legend in the plot. Default is "Durations (min)".}
    \item{textsize}{The text size to be used in the plot. Default is 15.}
 }
-}
+
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
